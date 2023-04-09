@@ -1,43 +1,30 @@
-let websites = [];
+let dep_array = [];
+let converted_url_array = [];
 
-let num_dep_min = 1;
-let num_dep_max = 95;
+function depNumConverter(dep_number_start, dep_number_end){
+    while(dep_number_start <= dep_number_end){
+        if (dep_number_start < 10){
+            dep_array.push("0" + dep_number_start);
+        }
 
-//Applies conventional numerotation for french departments : 
-function num_dep_converter(num, end) {
-    if(num < end){
-        let num_dep_min = 1;
-        let num_str = num.toString();
-        let result = "0" + num_str;
-        return result;
-    }
-    else{
-        return num;
+        else{
+            dep_array.push(dep_number_start);
+        }
+        dep_number_start++;
+    }    
+}
+
+function URLconverter(){
+    for(let i = 0 ; i < dep_array.length ; i++){
+        converted_url_array.push(url = "https://www.fede" + dep_array[i] + ".admr.org/") 
     }
 }
 
-//Builds an url for each departemental federation :
-function admrUrlBuilder(dep_num){
-    if(dep_num < 10){
-        let url = "https://www.fede" + num_dep_converter(1, 10) + ".admr.org";
-        websites.push(url);
-        console.log(url);
-    }
-    else{
-        let url = "https://www.fede" + dep_num + ".admr.org";
-        websites.push(url);
-        console.log(url);
-        return url;    
-    }
-}
+depNumConverter(1, 95);
+URLconverter();
 
-for(num_dep_min ; num_dep_min <= num_dep_max ; num_dep_min++){
-    admrUrlBuilder(num_dep_min);
-}
-
-
-//Requête :
-
-    
-
+converted_url_array.forEach(element => {
+    fetch(element)
+    .then(r => console.log(r));
+});
 
